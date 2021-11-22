@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!-- Friend record sample to copy paste
+      If one is single, leave the tag empty
+	  If a team is set, a member of a team can't give a gift to a teammate
+	  be careful though, as it seriously limits the entropy
+<Friend>
+<name></name>
+<adress></adress>
+<lover></lover>
+<team></team>
+</Friend>
+
+-->
+
+<KDONoel>
+<server>smtp.foo.com</server> <!-- put your mail server here -->
+<mail_title>[For %sender%]Party gift message!!</mail_title> <!-- mail subject -->
+<mail_message>Hi, for our Xmas party, you're asked to give a present to %receiver%.</mail_message>
+<SenderMail>foo@foo.com</SenderMail><!-- put your mail here, you'll be the sender of all mails -->
+
+<Friend>
+<name>Foo</name>
+<adress>foo@foo.com</adress>
+<lover>Bar</lover>
+<team>1</team>
+</Friend>
+
+<Friend>
+<name>Bar</name>
+<adress>bar@foo.com</adress>
+<lover>Foo</lover>
+<team>1</team>
+</Friend>
+
+<Friend>
+<name>Baz</name>
+<adress>baz@foo.com</adress>
+<lover></lover>
+<team>2</team>
+</Friend>
+
+<Friend>
+<name>Quux</name>
+<adress>quux@foo.com</adress>
+<lover></lover>
+<team>3</team>
+</Friend>
+
+</KDONoel>
