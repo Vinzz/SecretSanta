@@ -31,17 +31,17 @@ namespace KdoNoel5
 
 				bool bAns = false;
 				int spy = 0;
-
+				int limit = 99;
 				do
 				{
 					++spy;
 					bAns = KDoTools.RollTheDices(ref aFriendsColl);
-					if (spy == 10) break;
+					if (spy == limit) break;
 				} while (bAns == false);
 
 
 
-				if (spy == 10)
+				if (spy == limit)
 				{
 					throw new ArgumentException("\nError in present picking.\n " +
 												"You seem to have not enough guests...\n" +

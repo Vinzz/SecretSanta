@@ -28,11 +28,12 @@ namespace KDoNoel
             }
 
 			set
-			{ if(string.IsNullOrEmpty(value))
-                {
+			{ if (string.IsNullOrEmpty(value))
+				{
 					++teamIndex;
 					team = teamIndex.ToString();
 				}
+				else team = value; 
 			}
 		}
 		public string  Name { get; set; }
