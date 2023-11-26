@@ -1,9 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NUnit.Framework;
-using SendGrid;
-using SendGrid.Helpers.Mail;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using Mailjet.Client;
+using Mailjet.Client.Resources;
+using Mailjet.Client.TransactionalEmails;
+using NUnit.Framework;
 
 namespace SendGridTest
 {
@@ -14,16 +14,29 @@ namespace SendGridTest
         [Test]
         public static async Task SendGridTest()
         {
-            var apiKey = Environment.GetEnvironmentVariable("SendGridKey");
-            var client = new SendGridClient(apiKey);
-            var from = new EmailAddress("moulinette.a.vincent@gmail.com");
-            var subject = "Sending with SendGrid is Fun";
-            var to = new EmailAddress("vincent.tollu@gmail.com");
-            var plainTextContent = "and easy to do anywhere, even with C#";
-            var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
-            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
-            var response = await client.SendEmailAsync(msg);
+            MailjetClient client = new MailjetClient(
+            Environment.GetEnvironmentVariable("MJ_APIKEY_PUBLIC"),
+            Environment.GetEnvironmentVariable("MJ_APIKEY_PRIVATE"));
 
+
+            MailjetRequest request = new MailjetRequest
+            {
+                Resource = Send.Resource
+            };
+
+            // construct your email with builder
+            var email = new TransactionalEmailBuilder()
+                   .WithFrom(new SendContact("moulinette.a.vincent@gmail.com"))
+                   .WithSubject("Sending with Mailjet is Fun")
+                   .WithHtmlPart("<strong>and easy to do anywhere, even with C#</strong>")
+                   .WithTo(new SendContact("vincent.tollu@gmail.com"))
+                   .Build();
+
+            // invoke API to send email
+            var response = await client.SendTransactionalEmailAsync(email);
+
+            // check response
+            NUnit.Framework.Assert.AreEqual(1, response.Messages.Length);
         }
     }
 }

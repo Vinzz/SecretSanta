@@ -17,8 +17,9 @@ using System.Xml;
 using System.Net.Mail;
 using System.Net;
 using System.Threading.Tasks;
-using SendGrid;
-using SendGrid.Helpers.Mail;
+using Mailjet.Client;
+using Mailjet.Client.Resources;
+using Mailjet.Client.TransactionalEmails;
 
 namespace KDoNoel
 {
@@ -109,19 +110,31 @@ namespace KDoNoel
         // Sends mails... What a surprise!
         public static async Task SendMail(string stTo, string stFrom, string stSubject, string stBody)
         {
-			var apiKey = Environment.GetEnvironmentVariable("SendGridKey");
-            var client = new SendGridClient(apiKey);
-			var from = new EmailAddress("moulinette.a.vincent@gmail.com", "moulinette-à-vincent®");
-			var subject = stSubject;
-            var to = new EmailAddress(stTo);
-            var plainTextContent = stBody;
-            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, string.Empty);
-            var response = await client.SendEmailAsync(msg);
+            MailjetClient client = new MailjetClient(
+          Environment.GetEnvironmentVariable("MJ_APIKEY_PUBLIC"),
+          Environment.GetEnvironmentVariable("MJ_APIKEY_PRIVATE"));
 
-            if(response.StatusCode != HttpStatusCode.Accepted)
+
+            MailjetRequest request = new MailjetRequest
             {
-                throw new Exception("Houston! We have a problem");
-            }
+                Resource = Send.Resource
+            };
+
+            // construct your email with builder
+            var email = new TransactionalEmailBuilder()
+                   .WithFrom(new SendContact("moulinette.a.vincent@gmail.com", "moulinette-à-vincent®"))
+                   .WithSubject(stSubject)
+                   .WithTextPart(stBody)
+                   .WithTo(new SendContact(stTo))
+                   .Build();
+
+            // invoke API to send email
+            var response = await client.SendTransactionalEmailAsync(email);
+
+            if (response.Messages.Length !=1)
+			{
+				throw new Exception("could not send email");
+			}
         }
 
 		
