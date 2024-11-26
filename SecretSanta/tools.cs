@@ -28,7 +28,8 @@ namespace KDoNoel
 		public string subject;
 		public string message;
 		public string SenderMail;
-	}
+        public string DisplaySenderMail;
+    }
 		
 	/// <summary>
 	/// Various tools used
@@ -76,8 +77,11 @@ namespace KDoNoel
     			
     			node = docElement.SelectSingleNode("/KDONoel/SenderMail");
     			oServerInfo.SenderMail =node.InnerText;
-    			
-    			XmlNodeList NodesFriends = docElement.SelectNodes("/KDONoel/Friend");
+
+                node = docElement.SelectSingleNode("/KDONoel/DisplaySenderMail");
+                oServerInfo.DisplaySenderMail = node.InnerText;
+
+                XmlNodeList NodesFriends = docElement.SelectNodes("/KDONoel/Friend");
     			
     			foreach(XmlNode n in NodesFriends)
     			{
@@ -108,7 +112,7 @@ namespace KDoNoel
 		}
 
         // Sends mails... What a surprise!
-        public static async Task SendMail(string stTo, string stFrom, string stSubject, string stBody)
+        public static async Task SendMail(string stTo, string stFrom, string stSubject, string stBody, string stfromdisplay)
         {
             MailjetClient client = new MailjetClient(
           Environment.GetEnvironmentVariable("MJ_APIKEY_PUBLIC"),
@@ -122,7 +126,7 @@ namespace KDoNoel
 
             // construct your email with builder
             var email = new TransactionalEmailBuilder()
-                   .WithFrom(new SendContact("moulinette.a.vincent@gmail.com", "moulinette-à-vincent®"))
+                   .WithFrom(new SendContact(stFrom, stfromdisplay))
                    .WithSubject(stSubject)
                    .WithTextPart(stBody)
                    .WithTo(new SendContact(stTo))

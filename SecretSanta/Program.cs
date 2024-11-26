@@ -31,7 +31,7 @@ namespace KdoNoel5
 
 				bool bAns = false;
 				int spy = 0;
-				int limit = 99;
+				int limit = 250;
 				do
 				{
 					++spy;
@@ -72,13 +72,14 @@ namespace KdoNoel5
 						KDoTools.SendMail(pFCurrent.Mail,
 										   oServerInfo.SenderMail,
 										   stProcessedSubject,
-										   stProcessedMessage).Wait();
+										   stProcessedMessage, oServerInfo.DisplaySenderMail).Wait();
 					else
 					{
 						Console.WriteLine("<!-- Test Mode, Mail won't be sent -->");
 						Console.WriteLine("To: " + pFCurrent.Mail);
 						Console.WriteLine("From: " + oServerInfo.SenderMail);
-						Console.WriteLine("Subject: " + stProcessedSubject);
+                        Console.WriteLine("As: " + oServerInfo.DisplaySenderMail);
+                        Console.WriteLine("Subject: " + stProcessedSubject);
 						Console.WriteLine("Message: " + stProcessedMessage + "\n");
 					}
 				}
