@@ -50,7 +50,9 @@ namespace KdoNoel5
 												"Don't panic!... No mails were sent!");
 				}
 
-				TextWriter tw = new StreamWriter(@"SentMails");
+                FileInfo input = new FileInfo(args[0]);
+
+				TextWriter tw = new StreamWriter($"SentMails{Path.GetFileNameWithoutExtension(input.Name)}");
 				for (int iCurrent = 0; iCurrent < aFriendsColl.Count; ++iCurrent)
 				{
 					Friend pFCurrent = ((Friend)aFriendsColl[iCurrent]);

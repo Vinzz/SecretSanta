@@ -11,11 +11,9 @@
 using System;
 using System.Collections;
 using System.IO;
-using System.Text;
-using System.Text.RegularExpressions;
+using System.Linq;
 using System.Xml;
 using System.Net.Mail;
-using System.Net;
 using System.Threading.Tasks;
 using Mailjet.Client;
 using Mailjet.Client.Resources;
@@ -23,7 +21,7 @@ using Mailjet.Client.TransactionalEmails;
 
 namespace KDoNoel
 {
-	public struct ServerInfo
+    public struct ServerInfo
 	{
 		public string subject;
 		public string message;
@@ -100,7 +98,8 @@ namespace KDoNoel
 					};
     				aFriendsColl.Add(fPal); //store it in the coll
     			}
-			}
+
+            }
 			catch(System.Exception e)
 			{
 				Console.WriteLine("Error in the data file parsing.\n " +

@@ -13,7 +13,6 @@
 -->
 
 <KDONoel>
-<server>smtp.foo.com</server> <!-- put your mail server here -->
 <mail_title>[For %sender%]Party gift message!!</mail_title> <!-- mail subject -->
 <mail_message>Hi, for our Xmas party, you're asked to give a present to %receiver%.</mail_message>
 <SenderMail>foo@foo.com</SenderMail> <!-- put your mail here, you'll be the sender of all mails -->
